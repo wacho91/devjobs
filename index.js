@@ -62,11 +62,11 @@ app.use('/', router());
 
 //404 pagina no existente
 app.use((req, res ,next) => {
-    next(createError(404, 'No encontrado'))
+    next(createError(404, 'No Encontrado'))
 })
 
 //Administracion de los errores
-app.use((error, req, res) => {
+app.use((error, req, res, next) => {
     res.locals.mensaje = error.message;
     const status = error.status || 500;
     res.locals.status = status;
@@ -76,9 +76,11 @@ app.use((error, req, res) => {
 
 //Dejar que heroku asigne el puerto
 const host = '0.0.0.0';
-const port = process.env.PORT || 4000;
+const port = process.env.PORT;
+// app.listen(port, host, () => {
+//     console.log('El servidor esta funcionando')
+// });
+
 app.listen(port, host, () => {
     console.log('El servidor esta funcionando')
-});
-
-// app.listen(process.env.PUERTO)
+})
